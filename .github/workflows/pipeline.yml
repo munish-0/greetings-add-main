@@ -9,9 +9,9 @@ name: Pipeline Simple
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "debug" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "debug" ]
 
 jobs:
   build:
@@ -36,3 +36,14 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew build
 
+  info:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Print warning message
+      run: |
+        echo "::warning::This version is for debugging only."
+    - name: Dump context for runner
+      env:
+        RUNNER_CONTEXT: ${{ toJSON(runner) }}
+      run:
+        echo "::debug::Runner context is above."
